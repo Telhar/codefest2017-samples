@@ -5,10 +5,6 @@ dev*.conf
 logback-dev.xml
 *.dev.conf
 
-# ignore test data
-load/**/*.csv
-it-advisor/**/*.csv
-
 ### IntelliJ ###
 *.iml
 *.ipr
