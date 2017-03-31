@@ -2,8 +2,8 @@ package ru.dgis.casino
 
 import java.time.LocalDateTime
 
-import org.scalacheck.Gen
 import org.scalacheck.Arbitrary._
+import org.scalacheck.Gen
 import ru.dgis.casino.Message.ClickType.{OnButton, OnLink}
 
 object MessageGen {

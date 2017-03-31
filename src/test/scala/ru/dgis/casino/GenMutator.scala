@@ -1,12 +1,8 @@
 package ru.dgis.casino
 
-import scala.language.implicitConversions
 import org.scalacheck.Gen
-import GenUtils._
 
-object GenUtils {
-  implicit def sample[T](gen: Gen[T]): T = gen.sample.get
-}
+import scala.language.implicitConversions
 
 /** General trait to compose generator mutations */
 trait GenMutator[T] extends (Gen[T] => Gen[T]) {

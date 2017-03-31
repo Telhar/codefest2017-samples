@@ -7,8 +7,8 @@ import monocle.macros.GenLens
 import org.scalacheck.Gen
 
 object MessageMutator {
-  import MessageGen._
   import Message._
+  import MessageGen._
 
   object Id extends SimpleContext[Long] {
     override val clickLens = clickFieldLens(_.id, v => o => o.copy(id = v))

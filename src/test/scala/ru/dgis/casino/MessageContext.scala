@@ -19,7 +19,6 @@ case class MessageContext (
 }
 
 object MessageContext {
-  import GenMutator._
 
   implicit def fromClick(m: GenMutator[Click]): MessageContext = MessageContext(click = m)
   implicit def fromImpression(m: GenMutator[Impression]): MessageContext = MessageContext(impression = m)

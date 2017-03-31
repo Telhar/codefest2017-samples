@@ -1,13 +1,16 @@
 package ru.dgis.casino
 
+import monocle.Lens
 import org.scalacheck.Gen
-import ru.dgis.casino.Message._
 import ru.dgis.casino.GenMutator._
+import ru.dgis.casino.Message._
 
 import scala.language.postfixOps
-import monocle.Lens
-import monocle.macros.GenLens
 
+/**
+ * Common classes for
+ * Message mutations implementation
+ */
 trait MessageLens[T] {
   type ClickLens[A] = Lens[Click, A]
   type ImpressionLens[A] = Lens[Impression, A]
