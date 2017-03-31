@@ -20,6 +20,6 @@ object Message {
     }
   }
 
-  case class Click(id: Long, ts: LocalDateTime, `type`: ClickType) extends Message
+  case class Click(id: Long, ts: LocalDateTime, `type`: ClickType, `object`: Option[Object]) extends Message
   case class Impression(id: Long, ts: LocalDateTime, `object`: Object) extends Message
 }

@@ -9,22 +9,25 @@ import ru.dgis.casino.Message.ClickType.{OnButton, OnLink}
 object MessageGen {
   import ru.dgis.casino.Message._
 
+  val idGen = arbLong
+  val tsGen = Gen.const(LocalDateTime.now)
   val clickTypeGen: Gen[ClickType] = Gen.oneOf(OnLink, OnButton)
-
-  val clickGen: Gen[Click] = for {
-    id <- arbLong
-    ts <- LocalDateTime.now
-    _type <- clickTypeGen
-  } yield Click(id, ts, _type)
-
+  val objectTypeGen: Gen[Object.Type] = Gen.oneOf(Object.Type.Link, Object.Type.Button)
   val objectGen: Gen[Object] = for {
-    id <- arbLong
-    _type <- Gen.oneOf(Object.Type.Link, Object.Type.Button)
+    id <- idGen
+    _type <- objectTypeGen
   } yield Object(id, _type)
 
+  val clickGen: Gen[Click] = for {
+    id <- idGen
+    ts <- tsGen
+    _type <- clickTypeGen
+    _object <- Gen.option(objectGen)
+  } yield Click(id, ts, _type, _object)
+
   val impressionGen: Gen[Impression] = for {
-    id <- arbLong
-    ts <- LocalDateTime.now
+    id <- idGen
+    ts <- tsGen
     _object <- objectGen
   } yield Impression(id, ts, _object)
 
