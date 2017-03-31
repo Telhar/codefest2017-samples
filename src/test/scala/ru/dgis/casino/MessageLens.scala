@@ -5,21 +5,20 @@ import ru.dgis.casino.Message._
 import ru.dgis.casino.GenMutator._
 
 import scala.language.postfixOps
-import scalaz.Lens
+import monocle.Lens
+import monocle.macros.GenLens
 
 trait MessageLens[T] {
   type ClickLens[A] = Lens[Click, A]
   type ImpressionLens[A] = Lens[Impression, A]
 
-  object ClickLens {
-    def apply(set: (Click, T) => Click, get: (Click) => T) =
-      Some(Lens.lensu[Click, T] (set, get))
-  }
+  type ClickGet = Click => T
+  type ClickSet = T => Click => Click
+  type ImpGet = Impression => T
+  type ImpSet = T => Impression => Impression
 
-  object ImpressionLens {
-    def apply(set: (Impression, T) => Impression, get: (Impression) => T) =
-      Some(Lens.lensu[Impression, T] (set, get))
-  }
+  val clickFieldLens: (ClickGet, ClickSet) => Option[Lens[Click, T]] = (g, s) => Some(Lens[Click, T] (g)(s))
+  val impressionFieldLens: (ImpGet, ImpSet) => Option[Lens[Impression, T]] = (g, s) => Some(Lens[Impression, T](g)(s))
 }
 
 trait LensContext[T] extends MessageLens[T] {
@@ -33,7 +32,7 @@ trait LensContext[T] extends MessageLens[T] {
   }
   private def lensSet[M](l: Option[Lens[M, T]], o: M, v: T) = l match {
     case None => o
-    case Some(lens) => lens.set(o, v)
+    case Some(lens) => lens.set(v)(o)
   }
 
   def apply(v: T) = MessageContext(

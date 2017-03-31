@@ -11,7 +11,7 @@ object Message {
     case object OnButton extends ClickType("on_button")
   }
 
-  abstract class Object(id: Long, `type`: Object.Type)
+  case class Object(id: Long, `type`: Object.Type)
   object Object {
     sealed trait Type
     object Type {

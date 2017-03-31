@@ -9,7 +9,7 @@ import ru.dgis.casino.Message.ClickType.{OnButton, OnLink}
 object MessageGen {
   import ru.dgis.casino.Message._
 
-  val idGen = arbLong
+  val idGen = arbLong.arbitrary
   val tsGen = Gen.const(LocalDateTime.now)
   val clickTypeGen: Gen[ClickType] = Gen.oneOf(OnLink, OnButton)
   val objectTypeGen: Gen[Object.Type] = Gen.oneOf(Object.Type.Link, Object.Type.Button)
